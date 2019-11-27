@@ -42,3 +42,7 @@ eval "$(hub alias -s)"
 export EDITOR=/usr/local/bin/nvim
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+source /Users/nicksloan/.nix-profile/etc/profile.d/nix.sh
+
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
