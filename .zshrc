@@ -1,45 +1,41 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+# Nix
+source /Users/nicksloan/.nix-profile/etc/profile.d/nix.sh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="af-magic"
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' stagedstr '*'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' check-for-staged-changes true
+zstyle ':vcs_info:git:*' formats '%F{green}(%b%F{red}%u%F{yellow}%c%f%F{green})%f'
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Editor settings
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+alias vim=nvim
+export EDITOR=nvim
 
-# Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+# direnv
+eval "$(direnv hook zsh)"
 
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
+# vi mode
+bindkey -v
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
+# export PROMPT='%B%F{#00854b}%~%f%b » '
+PROMPT='%B%F{blue}%~%f%b'\$vcs_info_msg_0_' » '
 
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
+fpath+="/Users/nicksloan/.nix-profile/share/zsh/site-functions/"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+# The following lines were added by compinstall
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx virtualenv python ruby vi-mode)
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle :compinstall filename '/Users/nicksloan/.zshrc'
 
-source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-alias vim=/usr/local/bin/nvim
-eval "$(hub alias -s)"
-export EDITOR=/usr/local/bin/nvim
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
